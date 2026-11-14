@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>White Panel Ultra</title>
+<title>BlackNet Panel</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <!-- Persian fonts: Vazirmatn (modern) + Estedad (display) -->
@@ -24,9 +24,9 @@
 <div class="login-wrap" id="login-wrap" style="display:none">
   <div class="login-card">
     <div class="login-header">
-      <img src="/static/white-logo.svg" alt="White" onerror="this.style.display='none'" style="width:96px;height:96px;margin-bottom:6px">
-      <div class="login-title">WHITE PANEL</div>
-      <div class="login-subtitle">High Performance Panel</div>
+      <img src="/static/blacknet-logo.png" alt="BlackNet" onerror="this.style.display='none'" style="width:96px;height:96px;margin-bottom:6px">
+      <div class="login-title">BLACKNET</div>
+      <div class="login-subtitle">High Performance Proxy Panel</div>
     </div>
     <div class="error-msg" id="login-err">
       <span class="material-symbols-outlined" style="font-size:18px;">error</span>
@@ -60,10 +60,10 @@
   <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sb-brand">
-      <img src="/static/white-logo.svg" alt="White" onerror="this.style.display='none'" style="width:56px;height:56px;flex-shrink:0">
+      <img src="/static/blacknet-logo.png" alt="BlackNet" onerror="this.style.display='none'" style="width:56px;height:56px;flex-shrink:0">
       <div>
-        <div class="sb-brand-t"><span>W</span>HITE</div>
-        <div class="sb-brand-s">PANEL ULTRA</div>
+        <div class="sb-brand-t">BLACKNET</div>
+        <div class="sb-brand-s">PANEL</div>
       </div>
     </div>
     <nav class="sb-nav">
@@ -165,7 +165,7 @@
         <span data-i18n="logout">خروج</span>
       </div>
     </nav>
-    <div class="sb-foot"><span class="dot"></span> White Panel Ultra</div>
+    <div class="sb-foot"><span class="dot"></span> BlackNet Panel</div>
   </aside>
 
   <div class="main-area">
@@ -374,7 +374,7 @@
                   <label data-i18n="cfToken">Cloudflare API Token</label>
                   <div style="display:flex;gap:8px">
                     <input type="password" id="wk-token" dir="ltr" style="flex:1" autocomplete="off">
-                    <a class="btn btn-sm btn-g" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22page%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv_storage%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=*&zoneId=all&name=WhitePanel-Worker-Token" target="_blank" rel="noopener" style="text-decoration:none;white-space:nowrap"><span data-i18n="getToken">گرفتن توکن</span></a>
+                    <a class="btn btn-sm btn-g" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22page%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv_storage%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=*&zoneId=all&name=BlackNet-Worker-Token" target="_blank" rel="noopener" style="text-decoration:none;white-space:nowrap"><span data-i18n="getToken">گرفتن توکن</span></a>
                   </div>
                 </div>
                 <div class="px-hint" style="font-size:10px;color:var(--txt2);margin-bottom:6px" data-i18n="workerPermissionsHint">توکن باید دست‌کم Pages:Write و Workers KV Storage:Edit و خواندن Account داشته باشد. Account ID خودکار شناسایی می‌شود.</div>
@@ -454,7 +454,7 @@
                   <div class="f-g"><label>لینک Channel</label><input id="bot-channel" type="text" dir="ltr" placeholder="https://t.me/mychannel یا @mychannel"></div>
                   <div class="f-r">
                     <div class="f-g"><label>زمان‌بندی (دقیقه)</label><input id="bot-channel-interval" type="number" min="1" max="10080" value="60" dir="ltr"></div>
-                    <div class="f-g"><label>پیشوند نام کاربر</label><input id="bot-channel-prefix" type="text" dir="ltr" value="white"></div>
+                    <div class="f-g"><label>پیشوند نام کاربر</label><input id="bot-channel-prefix" type="text" dir="ltr" value="blacknet"></div>
                   </div>
                   <div class="f-r">
                     <div class="f-g"><label>ترافیک هر کاربر (GB) — ۰ نامحدود</label><input id="bot-channel-traffic" type="number" min="0" step="0.1" value="0" dir="ltr"></div>
@@ -575,7 +575,7 @@
               </div>
               <div class="settings-inner-block">
                 <div class="panel-h"><span class="glow" data-i18n="panelUpdate">بروزرسانی پنل</span></div>
-                <div class="px-hint" data-i18n="panelUpdateHint">با زدن این دکمه، آخرین نسخه ریپو از GitHub دریافت و روی سرور نصب می‌شود (Itskillmaster). بعد از اتمام، پنل را در Railway ری‌استارت/ری‌دپلوی کنید تا نسخه جدید اعمال شود.</div>
+                <div class="px-hint" data-i18n="panelUpdateHint">قابلیت بروزرسانی مستقیم از مخزن غیرفعال است. برای آپدیت با پشتیبانی بلک‌نت تماس بگیرید.</div>
                 <div id="upd-ver" style="font-size:11px;color:var(--txt2);margin-top:8px;line-height:1.8"></div>
                 <div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-p" style="flex:1" type="button" id="upd-btn" onclick="runPanelUpdate()"><span data-i18n="updatePanel">بروزرسانی</span></button></div>
                 <pre id="upd-log" dir="ltr" style="display:none;margin-top:10px;padding:10px;border-radius:8px;background:var(--bg2,#111);color:var(--green);font-size:11px;max-height:220px;overflow-y:auto;white-space:pre-wrap;font-family:monospace"></pre>
@@ -592,9 +592,9 @@
               </div>
               <div class="settings-inner-block">
                 <div class="panel-h"><span class="glow">پیشوند کانفیگ</span></div>
-                <div class="px-hint">پیشوند نام همه کانفیگ‌های ساخته‌شده. پیش‌فرض: White- (هر اینباند می‌تواند پیشوند اختصاصی داشته باشد).</div>
+                <div class="px-hint">پیشوند نام همه کانفیگ‌های ساخته‌شده. پیش‌فرض: BlackNet- (هر اینباند می‌تواند پیشوند اختصاصی داشته باشد).</div>
                 <div style="display:flex;gap:8px;margin-top:8px">
-                  <input type="text" id="set-config-prefix" dir="ltr" placeholder="White-" style="flex:1">
+                  <input type="text" id="set-config-prefix" dir="ltr" placeholder="BlackNet-" style="flex:1">
                   <button class="btn btn-p" type="button" onclick="saveConfigPrefix()">ذخیره</button>
                 </div>
               </div>
@@ -766,7 +766,7 @@
               <span class="glow"><span data-i18n="tm.title">Tunnel Management</span> · <span data-i18n="tm.server">Server</span></span>
               <button class="btn btn-p" type="button" onclick="tmOpenServerModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span data-i18n="tm.addServer">Add Server</span></button>
             </div>
-            <div class="px-hint" data-i18n="tm.serverHint">Each server is a real White Panel Node. The API key is stored server-side only and is never sent to the browser.</div>
+            <div class="px-hint" data-i18n="tm.serverHint">Each server is a real BlackNet Node. The API key is stored server-side only and is never sent to the browser.</div>
             <div class="tm-servers" id="tm-server-list"><div class="empty" data-i18n="loading">در حال بارگذاری...</div></div>
           </div>
         </div>
@@ -803,8 +803,9 @@
           <div class="panel-h"><span class="glow" data-i18n="contact">Contact Me</span></div>
           <p class="contact-sub" data-i18n="contactSub">برای پشتیبانی و همکاری با من در ارتباط باشید</p>
           <div class="contact-bubbles">
-            <a class="contact-bubble tg" href="https://t.me/blacknet_support" target="_blank" rel="noopener" title="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
-            <a class="contact-bubble gh" href="https://github.com/Itskillmaster" target="_blank" rel="noopener" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-.3.063-.61.095-.88.095-1.74 0-2.13-1.32-2.13-1.32-.285-.72-.695-1.313-1.238-1.673-.99-.675.06-.662.06-.662 1.08.06 1.65 1.065 1.65 1.065.96 1.65 2.52 1.173 3.135.897.097-.698.375-1.173.682-1.442-2.38-.27-4.875-1.19-4.875-5.31 0-1.173.42-2.133 1.11-2.883-.11-.27-.48-1.362.105-2.838 0 0 .907-.285 2.97 1.105.87-.24 1.8-.36 2.73-.36.93 0 1.86.12 2.73.36 2.06-1.39 2.97-1.105 2.97-1.105.586 1.476.216 2.568.105 2.838.69.75 1.11 1.71 1.11 2.883 0 4.13-2.5 5.035-4.885 5.31.385.33.72.98.72 1.975 0 1.425-.015 2.57-.015 2.92 0 .32.22.695.825.575C20.565 22.09 24 17.595 24 12.297 24 5.67 18.63.297 12 .297z"/></svg><span style="display:none">GitHub</span></a>
+            <a class="contact-bubble tg" href="https://t.me/BlackNet_Official" target="_blank" rel="noopener" title="Channel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+            <a class="contact-bubble tg" href="https://t.me/blacknet_support" target="_blank" rel="noopener" title="Support"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+            <a class="contact-bubble tg" href="https://t.me/blacknet03_bot" target="_blank" rel="noopener" title="Bot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
           </div>
         </div>
       </div>
@@ -978,7 +979,7 @@
               <button type="button" class="spd-acc-head" onclick="spdToggleAcc('help-template',this)" aria-expanded="false"><span class="spd-acc-title"><strong data-i18n="helpTemplate">Template</strong></span><span class="material-symbols-outlined spd-acc-arrow">expand_more</span></button>
               <div class="spd-acc-body" id="acc-help-template">
                 <div class="px-hint" data-i18n="helpPromptHint">این Prompt منطق صفحه ساب فعلی را توضیح می‌دهد تا بتوانید آن را به هوش مصنوعی بدهید.</div>
-                <textarea id="help-template-text" readonly dir="ltr" spellcheck="false" style="width:100%;min-height:360px;margin:10px 0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--txt);font:12px/1.6 monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text">You are modifying White Panel's user subscription page, static/sub.html. First inspect the existing page and its server-side data contract. Preserve the established behavior unless the requested change requires otherwise.
+                <textarea id="help-template-text" readonly dir="ltr" spellcheck="false" style="width:100%;min-height:360px;margin:10px 0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--txt);font:12px/1.6 monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text">You are modifying BlackNet's user subscription page, static/sub.html. First inspect the existing page and its server-side data contract. Preserve the established behavior unless the requested change requires otherwise.
 
 PAGE AND DATA CONTRACT
 - The page is served for a user's subscription UUID and reads the final path segment as uname. It fetches GET /api/sub/{encodeURIComponent(uname)} with cache: no-store.
@@ -1137,7 +1138,7 @@ IMPLEMENTATION RULES
     </div>
     <div class="divider"></div>
     <div style="font-size:11px;color:var(--neon);font-weight:700;margin-bottom:8px">تنظیمات پیشرفته کانفیگ</div>
-    <div class="f-g"><label>پیشوند نام کانفیگ</label><input type="text" id="ib-nameprefix" dir="ltr" placeholder="White-"><div class="px-hint" style="font-size:10px">خالی = استفاده از پیشوند عمومی تنظیمات.</div></div>
+    <div class="f-g"><label>پیشوند نام کانفیگ</label><input type="text" id="ib-nameprefix" dir="ltr" placeholder="BlackNet-"><div class="px-hint" style="font-size:10px">خالی = استفاده از پیشوند عمومی تنظیمات.</div></div>
     <div class="f-r">
       <div class="f-g"><label>Fingerprint</label><input type="text" id="ib-fingerprint" dir="ltr" placeholder="chrome"></div>
       <div class="f-g"><label>ALPN</label><input type="text" id="ib-alpn" dir="ltr" placeholder="h2,http/1.1"></div>

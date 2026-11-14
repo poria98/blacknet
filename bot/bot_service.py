@@ -1,5 +1,5 @@
 """
-White Panel - Telegram Engine & Bot Automation
+BlackNet - Telegram Engine & Bot Automation
 Handles:
 1. Customer Workflow: /start, Show Plans, Place Order, Send Receipt, Receive Config & QR
 2. Channel Bot: Periodic status and node health announcements
@@ -17,9 +17,9 @@ import urllib.parse
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] [WhiteBot] %(message)s"
+    format="%(asctime)s [%(levelname)s] [BlackNetBot] %(message)s"
 )
-logger = logging.getLogger("WhiteBot")
+logger = logging.getLogger("BlackNetBot")
 
 PANEL_API_URL = os.environ.get("WHITE_PANEL_API_URL", "http://127.0.0.1:8080").rstrip("/")
 BOT_TOKEN = os.environ.get("WHITE_BOT_TOKEN", "")
@@ -31,7 +31,7 @@ ORDERS: Dict[str, Dict[str, Any]] = {}
 USER_STEPS: Dict[int, str] = {}
 
 class GoBackendClient:
-    """HTTP Client communicating directly with White Panel Go Core"""
+    """HTTP Client communicating directly with BlackNet Go Core"""
     def __init__(self, base_url: str):
         self.base_url = base_url
 
@@ -59,7 +59,7 @@ class GoBackendClient:
             "username": username,
             "traffic_limit": int(traffic_gb * 1024 * 1024 * 1024),
             "expire_days": int(expire_days),
-            "note": f"Generated automatically by WhiteBot for {username}"
+            "note": f"Generated automatically by BlackNetBot for {username}"
         }
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
@@ -124,7 +124,7 @@ def main_keyboard():
 async def handle_start(chat_id: int, name: str):
     welcome_text = (
         f"سلام <b>{name}</b> عزیز! 🌟\n\n"
-        "به ربات رسمی <b>White Panel</b> خوش آمدید.\n"
+        "به ربات رسمی <b>BlackNet</b> خوش آمدید.\n"
         "از طریق منوی زیر می‌توانید اشتراک پرسرعت تهیه کنید، سرویس خود را مدیریت کنید و یا وضعیت سرورها را مشاهده نمایید."
     )
     await send_message(chat_id, welcome_text, main_keyboard())
@@ -161,7 +161,7 @@ async def handle_buy_plan(chat_id: int, plan_id: str, username: str):
         f"💰 مبلغ قابل پرداخت: <b>{int(selected['price_toman']):,} تومان</b>\n\n"
         "💳 شماره کارت جهت واریز:\n"
         "<code>6037-9975-0000-0000</code>\n"
-        "به نام: <i>مدیریت White Panel</i>\n\n"
+        "به نام: <i>مدیریت BlackNet</i>\n\n"
         "📸 لطفاً پس از واریز، <b>تصویر فیش یا شماره پیگیری</b> را ارسال کنید تا کانفیگ شما فوراً صادر شود."
     )
     await send_message(chat_id, card_info)
@@ -171,7 +171,7 @@ async def activate_and_deliver(chat_id: int, order: Dict[str, Any]):
     plan = order["plan"]
     uname = f"wp_{chat_id}_{int(time.time()%10000)}"
     
-    await send_message(chat_id, "⚡ درحال ساخت سرویس اختصاصی شما در سرورهای White...")
+    await send_message(chat_id, "⚡ درحال ساخت سرویس اختصاصی شما در سرورهای BlackNet...")
     
     res = await backend_client.create_user_and_generate_config(
         username=uname,
@@ -209,7 +209,7 @@ async def bot_poll_loop():
         return
 
     offset = 0
-    logger.info("White Telegram Bot service started polling...")
+    logger.info("BlackNet Telegram Bot service started polling...")
 
     while True:
         try:
@@ -260,7 +260,7 @@ async def bot_poll_loop():
                         elif text == "🛍 خرید اشتراک":
                             await handle_plans(cid)
                         elif text == "📊 وضعیت سرورها":
-                            await send_message(cid, "🟢 کلیه سرورهای White Panel فعال و پایدار هستند.")
+                            await send_message(cid, "🟢 کلیه سرورهای BlackNet فعال و پایدار هستند.")
                         elif text == "📞 پشتیبانی":
                             await send_message(cid, "💬 جهت ارتباط با پشتیبانی به آیدی ادمین پیام دهید.")
 
