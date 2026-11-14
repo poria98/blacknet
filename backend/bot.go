@@ -15,7 +15,7 @@ import (
 )
 
 // ============================================================================
-// TELEGRAM BOT SERVICE & ENkjdnojGINE (WITH ADMIN APPROVAL & ADVANCED PANEL)
+// TELEGRAM BOT SERVICE & ENGINE (WITH ADMIN APPROVAL & ADVANCED PANEL)
 // ============================================================================
 
 type BotOrder struct {
