@@ -1,4 +1,4 @@
-"""
+ """
 BlackNet - Telegram Engine & Bot Automation
 Handles:
 1. Customer Workflow: /start, Show Plans, Place Order, Send Receipt, Receive Config & QR
