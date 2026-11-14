@@ -447,7 +447,7 @@
   }
 
   /* ---------- Quick Connect ---------- */
-  var QC_NAME = "WHITE";
+  var QC_NAME = "BLACKNET";
   function qcPlay(q){ return "https://play.google.com/store/search?c=apps&q=" + encodeURIComponent(q); }
   function qcIos(q){ return "itms-apps://search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=software&term=" + encodeURIComponent(q); }
   var uV2rayng  = function(s,n){ return "v2rayng://install-sub?url=" + encodeURIComponent(s) + "&name=" + encodeURIComponent(n); };
