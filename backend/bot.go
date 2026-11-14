@@ -276,7 +276,7 @@ func getBotSellConfigLocked() map[string]any {
 		"enabled":           false,
 		"admin_chat_id":     "",
 		"support_username":  "",
-		"support_text":      "برای پشتیبانی با مدیر در ارتباط باشید.",
+		"support_text":      "برای پشتیبانی با @blacknet_support در ارتباط باشید.\nhttps://t.me/blacknet_support",
 		"payment_url":       "",
 		"payment_details":   "",
 		"required_channels": []any{},
@@ -1085,8 +1085,11 @@ func (bm *TelegramBotManager) handleMessage(token string, msg map[string]any) {
 	case "👤 حساب کاربری من":
 		bm.sendUserAccountInfo(token, chatID)
 
-	case "📊 وضعیت سرورها":
-		bm.sendServerStats(token, chatID)
+	case "📖 آموزش اتصال":
+		bm.sendConnectionGuide(token, chatID)
+
+	case "📢 کانال رسمی":
+		bm.sendOfficialChannel(token, chatID)
 
 	case "📞 پشتیبانی":
 		bm.sendSupportInfo(token, chatID)
@@ -1200,12 +1203,13 @@ func (bm *TelegramBotManager) sendWelcomeMenu(token string, chatID int64, name s
 	State.mu.RUnlock()
 
 	if welcome == "" {
-		welcome = fmt.Sprintf("سلام <b>%s</b> عزیز! 🌟\nبه ربات رسمی White Panel خوش آمدید.\nجهت شروع یکی از گزینه‌های زیر را انتخاب فرمایید:", name)
+		welcome = fmt.Sprintf("سلام <b>%s</b> عزیز! 🌟\nبه ربات رسمی <b>BlackNet</b> خوش آمدید.\nجهت شروع یکی از گزینه‌های زیر را انتخاب فرمایید:\n\n📢 کانال: @BlackNet_Official\n💬 پشتیبانی: @blacknet_support", name)
 	}
 
 	rows := [][]map[string]any{
 		{{"text": "🛍 خرید اشتراک"}, {"text": "👤 حساب کاربری من"}},
-		{{"text": "📊 وضعیت سرورها"}, {"text": "📞 پشتیبانی"}},
+		{{"text": "📖 آموزش اتصال"}, {"text": "📞 پشتیبانی"}},
+		{{"text": "📢 کانال رسمی"}},
 	}
 	if isAdmin {
 		rows = append(rows, []map[string]any{{"text": "👑 پنل ادمین"}})
@@ -1539,7 +1543,7 @@ func (bm *TelegramBotManager) handleAdminApprovalAction(token string, adminChatI
 	order.Status = "approved"
 	order.ApprovedBy = adminUser
 
-	// Create user in White Panel
+	// Create user in BlackNet
 	uname := fmt.Sprintf("wp_%d_%s", order.ChatID%10000, generateShortID()[:4])
 	trafficBytes := int64(order.TrafficGB * 1024 * 1024 * 1024)
 	expireDays := order.ExpireDays
@@ -1643,7 +1647,7 @@ func (bm *TelegramBotManager) handleAdminApprovalAction(token string, adminChatI
 // ----------------- Dedicated Admin Panel in Telegram -----------------
 
 func (bm *TelegramBotManager) sendAdminPanelMenu(token string, chatID int64) {
-	text := "👑 <b>پنل مدیریت هوشمند White Panel</b>\n\n" +
+	text := "👑 <b>پنل مدیریت هوشمند BlackNet</b>\n\n" +
 		"شما به عنوان ادمین مجاز وارد شدید. لطفاً یکی از بخش‌های زیر را انتخاب فرمایید:"
 
 	markup := map[string]any{
@@ -1984,6 +1988,53 @@ func (bm *TelegramBotManager) sendUserAccountInfo(token string, chatID int64) {
 	})
 }
 
+
+func (bm *TelegramBotManager) sendConnectionGuide(token string, chatID int64) {
+	msg := "📖 <b>آموزش اتصال BlackNet</b>\n" +
+		"━━━━━━━━━━━━━━━━\n\n" +
+		"<b>۱) نصب نرم‌افزار</b>\n" +
+		"• اندروید: <b>v2rayNG</b> یا <b>Hiddify</b>\n" +
+		"• آیفون: <b>Streisand</b> / <b>Hiddify</b> / <b>V2Box</b>\n" +
+		"• ویندوز: <b>v2rayN</b> یا <b>Hiddify</b>\n\n" +
+		"<b>۲) دریافت لینک ساب</b>\n" +
+		"بعد از خرید، لینک Subscription را از ربات کپی کنید.\n\n" +
+		"<b>۳) افزودن به نرم‌افزار</b>\n" +
+		"• v2rayNG: ＋ ← Import from clipboard یا Subscription\n" +
+		"• Hiddify: ＋ ← افزودن از کلیپ‌بورد / لینک\n" +
+		"• Streisand / V2Box: Import subscription\n\n" +
+		"<b>۴) اتصال</b>\n" +
+		"سرور را انتخاب و Connect بزنید. اگر وصل نشد Update subscription و سرور دیگر را امتحان کنید.\n\n" +
+		"<b>۵) مشکلات رایج</b>\n" +
+		"• لینک را کامل کپی کنید\n" +
+		"• ساعت گوشی درست باشد\n" +
+		"• فیلترشکن دیگر همزمان روشن نباشد\n\n" +
+		"💬 پشتیبانی: https://t.me/blacknet_support\n" +
+		"📢 کانال: https://t.me/BlackNet_Official"
+
+	_, _ = bm.callAPI(token, "sendMessage", map[string]any{
+		"chat_id":    chatID,
+		"text":       msg,
+		"parse_mode": "HTML",
+	})
+}
+
+func (bm *TelegramBotManager) sendOfficialChannel(token string, chatID int64) {
+	msg := "📢 <b>کانال رسمی BlackNet</b>\n\n" +
+		"برای آخرین اخبار و آپدیت‌ها عضو شوید:\n" +
+		"https://t.me/BlackNet_Official"
+
+	_, _ = bm.callAPI(token, "sendMessage", map[string]any{
+		"chat_id":      chatID,
+		"text":         msg,
+		"parse_mode":   "HTML",
+		"reply_markup": map[string]any{
+			"inline_keyboard": [][]map[string]any{
+				{{"text": "عضویت در کانال", "url": "https://t.me/BlackNet_Official"}},
+			},
+		},
+	})
+}
+
 func (bm *TelegramBotManager) sendServerStats(token string, chatID int64) {
 	State.mu.RLock()
 	userCount := len(State.Users)
@@ -2015,7 +2066,7 @@ func (bm *TelegramBotManager) sendSupportInfo(token string, chatID int64) {
 		supportText = "💬 جهت هرگونه سوال، مشاوره یا راهنمایی در اتصال با پشتیبانی تماس بگیرید:"
 	}
 
-	msg := fmt.Sprintf("📞 <b>پشتیبانی White Panel:</b>\n\n%s\n", supportText)
+	msg := fmt.Sprintf("📞 <b>پشتیبانی BlackNet:</b>\n\n%s\n", supportText)
 	if supportUser != "" {
 		if !strings.HasPrefix(supportUser, "@") {
 			supportUser = "@" + supportUser
