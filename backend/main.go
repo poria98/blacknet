@@ -2462,6 +2462,123 @@ PersistentKeepalive = 25`,
 		cfgUUID, addr, port, q.Encode(), url.QueryEscape(remark))
 }
 
+func parseScannedIPEntry(entry string) (ip string, port int) {
+	entry = strings.TrimSpace(entry)
+	if entry == "" {
+		return "", 0
+	}
+	// Entries are stored as "ip:port" (or bare IP / [ipv6]:port).
+	if strings.HasPrefix(entry, "[") {
+		close := strings.Index(entry, "]")
+		if close > 1 {
+			ip = entry[1:close]
+			rest := entry[close+1:]
+			if strings.HasPrefix(rest, ":") {
+				if p, err := strconv.Atoi(strings.TrimPrefix(rest, ":")); err == nil {
+					port = p
+				}
+			}
+			return ip, port
+		}
+	}
+	if host, pstr, err := net.SplitHostPort(entry); err == nil {
+		ip = host
+		if p, err2 := strconv.Atoi(pstr); err2 == nil {
+			port = p
+		}
+		return ip, port
+	}
+	// Bare IPv4 / hostname without port.
+	if strings.Count(entry, ":") == 0 {
+		return entry, 0
+	}
+	// Likely bare IPv6 without brackets.
+	return entry, 0
+}
+
+func inboundWantsCustomIP(u *User, kind, inboundID string) bool {
+	if u == nil || u.CustomIPInbounds == nil {
+		return false
+	}
+	for _, id := range u.CustomIPInbounds[kind] {
+		if id == inboundID {
+			return true
+		}
+	}
+	return false
+}
+
+// rewriteVlessServer replaces the connection address/port on a vless:// link
+// while keeping query host/sni on the original domain (needed for TLS + scanned IPs).
+func rewriteVlessServer(cfg, server string, port int, remarkSuffix string) string {
+	if cfg == "" || server == "" || !strings.HasPrefix(cfg, "vless://") {
+		return ""
+	}
+	u, err := url.Parse(cfg)
+	if err != nil || u.User == nil {
+		return ""
+	}
+	uuid := u.User.Username()
+	if uuid == "" {
+		return ""
+	}
+	if port <= 0 {
+		port = 443
+		if u.Port() != "" {
+			if p, err := strconv.Atoi(u.Port()); err == nil && p > 0 {
+				port = p
+			}
+		}
+	}
+	// Keep existing query (host/sni stay on domain). Only the authority changes.
+	q := u.Query()
+	frag := u.Fragment
+	if remarkSuffix != "" {
+		decoded, err := url.QueryUnescape(frag)
+		if err != nil {
+			decoded = frag
+		}
+		frag = url.QueryEscape(decoded + remarkSuffix)
+	}
+	hostPort := net.JoinHostPort(server, strconv.Itoa(port))
+	return fmt.Sprintf("vless://%s@%s?%s#%s", uuid, hostPort, q.Encode(), frag)
+}
+
+func appendScannedIPConfigs(r *http.Request, u *User, inboundID, kind string, out []string, seen map[string]bool) []string {
+	if !inboundWantsCustomIP(u, kind, inboundID) {
+		return out
+	}
+	base := generateUserConfig(r, u, inboundID)
+	if base == "" || !strings.HasPrefix(base, "vless://") {
+		return out
+	}
+	entries := readLineFile(scannerIPFile(kind))
+	if len(entries) == 0 {
+		return out
+	}
+	// UI promises "10 configs"; take the top (latency-sorted) entries.
+	limit := 10
+	if len(entries) < limit {
+		limit = len(entries)
+	}
+	tag := "CF"
+	if kind == "railway" {
+		tag = "RW"
+	}
+	for i := 0; i < limit; i++ {
+		ip, port := parseScannedIPEntry(entries[i])
+		if ip == "" {
+			continue
+		}
+		cfg := rewriteVlessServer(base, ip, port, fmt.Sprintf("-%s-%d", tag, i+1))
+		if cfg != "" && !seen[cfg] {
+			seen[cfg] = true
+			out = append(out, cfg)
+		}
+	}
+	return out
+}
+
 func generateUserConfigs(r *http.Request, u *User) []string {
 	out := []string{}
 	seen := map[string]bool{}
@@ -2474,6 +2591,9 @@ func generateUserConfigs(r *http.Request, u *User) []string {
 			seen[cfg] = true
 			out = append(out, cfg)
 		}
+		// Extra configs from scanner lists when the create-user switches were enabled.
+		out = appendScannedIPConfigs(r, u, iid, "cf", out, seen)
+		out = appendScannedIPConfigs(r, u, iid, "railway", out, seen)
 	}
 	return out
 }
