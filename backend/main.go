@@ -2534,6 +2534,7 @@ func rewriteVlessServer(cfg, server string, port int, remarkSuffix string) strin
 	q := u.Query()
 	frag := u.Fragment
 	if remarkSuffix != "" {
+		// Fragment may already be query-escaped; append plain suffix then re-escape.
 		decoded, err := url.QueryUnescape(frag)
 		if err != nil {
 			decoded = frag
